@@ -1,6 +1,10 @@
 package com.devian.studentportal.model;
 
-import jakarta.persistence.*;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.*;
 
 @Entity
@@ -9,17 +13,16 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "student")
-public class StudentEntity {
+@Table(name = "instructor")
+public class InstructorEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     private String firstName;
     private String lastName;
     private int mobileNumber;
     private String email;
-    private String password;
-
+    private String phoneNumber;
 }
