@@ -2,14 +2,15 @@ package com.devian.studentportal.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 
 @Entity
 @Getter
 @Setter
-@ToString
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "student")
+@Table(name = "students")
 public class StudentEntity {
 
     @Id
@@ -18,8 +19,10 @@ public class StudentEntity {
 
     private String firstName;
     private String lastName;
-    private int mobileNumber;
+    private String mobileNumber;
     private String email;
+
+    @JsonIgnore
     private String password;
 
 }
