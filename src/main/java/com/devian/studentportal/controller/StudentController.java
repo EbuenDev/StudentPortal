@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class StudentController {
 
 
-    private StudentService studentService;
+    private final StudentService studentService;
 
     @Autowired
     public StudentController(StudentService studentService) {
@@ -35,7 +35,7 @@ public class StudentController {
                 .collect(Collectors.toList());
     }
 
-    // Get Sing Student by Id
+    // Get Sing Student by I'd
     @GetMapping("/{id}")
     public ResponseEntity<StudentDto> getStudentById(@PathVariable Long id) {
         StudentEntity studentEntity = studentService.getStudentById(id);

@@ -3,7 +3,6 @@ package com.devian.studentportal.service;
 import com.devian.studentportal.model.StudentEntity;
 import com.devian.studentportal.repo.StudentRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StudentService {
 
-    @Autowired
+
     private final StudentRepository studentRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
