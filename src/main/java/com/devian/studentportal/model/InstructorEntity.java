@@ -1,13 +1,8 @@
 package com.devian.studentportal.model;
 
-
-import ch.qos.logback.core.status.Status;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.nimbusds.openid.connect.sdk.claims.Gender;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.boot.autoconfigure.web.WebProperties;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDate;
 
 @Entity
@@ -19,12 +14,25 @@ import java.time.LocalDate;
 @Table(name = "instructors")
 public class InstructorEntity {
 
+    // Enums defined first for better structure
+    public enum Gender {
+        MALE,
+        FEMALE
+    }
+
+    public enum Status {
+        ACTIVE,
+        INACTIVE,
+        ON_LEAVE,
+        DELETED
+    }
+
+    // Primary identifier
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-    // Personal Information of Instructor
+    // Personal Information
     private String firstName;
     private String middleName;
     private String lastName;
@@ -33,40 +41,29 @@ public class InstructorEntity {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    private String civilStatus;
+    private String profilePicture;
 
-    // Contact Details of Instructor
+    // Contact Information
     private String mobileNumber;
+    private String homeNumber;
     private String email;
 
+    // Security Information
     @JsonIgnore
     private String password;
 
-
-    // Address of Instructor
+    // Address Information
     private String barangay;
     private String street;
     private String city;
     private String province;
     private String zipCode;
-    
 
-    // Education Information of Instructor
+    // Professional Information
     private String department;
-
+    private String instructorIDNumber;
 
     @Enumerated(EnumType.STRING)
     private Status status;
-
-
-    public enum Gender {
-        MALE,
-        FEMALE;
-    }
-
-    public enum Status {
-        ACTIVE,
-        INACTIVE,
-        ON_LEAVE,
-        DELETED;
-    }
 }
