@@ -2,6 +2,7 @@ package com.devian.studentportal.model;
 
 
 import ch.qos.logback.core.status.Status;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nimbusds.openid.connect.sdk.claims.Gender;
 import jakarta.persistence.*;
 import lombok.*;
@@ -34,18 +35,27 @@ public class InstructorEntity {
 
 
     // Contact Details of Instructor
-    @Column(unique = true)
-    private String email;
     private String mobileNumber;
-    private String address;
+    private String email;
+
+    @JsonIgnore
+    private String password;
+
+
+    // Address of Instructor
+    private String barangay;
+    private String street;
+    private String city;
+    private String province;
+    private String zipCode;
+    
+
+    // Education Information of Instructor
+    private String department;
 
 
     @Enumerated(EnumType.STRING)
     private Status status;
-
-
-    // Education Information of Instructor
-    private String department;
 
 
     public enum Gender {
