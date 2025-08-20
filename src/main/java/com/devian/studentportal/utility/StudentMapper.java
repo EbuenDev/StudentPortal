@@ -16,21 +16,10 @@ public class StudentMapper {
                 .lastName(entity.getLastName())
                 .mobileNumber(entity.getMobileNumber())
                 .email(entity.getEmail())
+                .course(entity.getCourse())
                 .build();
     }
 
-    public static StudentEntity toEntity(StudentDto dto) {
-        if (dto == null) return null;
-
-        return StudentEntity.builder()
-                .id(dto.getId())
-                .firstName(dto.getFirstName())
-                .lastName(dto.getLastName())
-                .mobileNumber(dto.getMobileNumber())
-                .email(dto.getEmail())
-                // no password here, set password separately in service when registering
-                .build();
-    }
 
     public static StudentEntity fromRegisterDto(StudentRegisterDto dto) {
         if (dto == null) return null;
@@ -40,6 +29,7 @@ public class StudentMapper {
                 .lastName(dto.getLastName())
                 .mobileNumber(dto.getMobileNumber())
                 .email(dto.getEmail())
+                .course(dto.getCourse())
                 .password(dto.getPassword()) // will be hashed in service layer
                 .build();
 

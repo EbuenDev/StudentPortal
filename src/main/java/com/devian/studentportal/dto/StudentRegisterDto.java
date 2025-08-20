@@ -16,5 +16,6 @@ public class StudentRegisterDto {
     private String lastName;
     private String mobileNumber;
     private String email;
+    private String course;
     private String password;
 }
