@@ -8,6 +8,7 @@ import com.devian.studentportal.service.StudentService;
 import com.devian.studentportal.utility.StudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +20,8 @@ public class StudentController {
 
 
     private final StudentService studentService;
+
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
     public StudentController(StudentService studentService) {
@@ -47,6 +50,7 @@ public class StudentController {
     }
 
 
+
     // Register Student
     @PostMapping
     public ResponseEntity<StudentDto> createStudent(@RequestBody StudentRegisterDto registerDto) {
@@ -57,15 +61,30 @@ public class StudentController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<StudentEntity> updateStudent(@PathVariable Long id, @RequestBody StudentEntity studentEntity) {
-        StudentEntity updatedStudentEntity = studentService.saveStudent(studentEntity);
+    public ResponseEntity<StudentDto> updateStudent(
+            @PathVariable Long id,
+            @RequestBody StudentEntity studentEntity) {
 
-        if (updatedStudentEntity != null) {
-            studentEntity.setId(id);
-            return ResponseEntity.ok(updatedStudentEntity);
-        } else {
+        // First, check if students exist
+        StudentEntity existingStudent = studentService.getStudentById(id);
+        if (existingStudent == null) {
             return ResponseEntity.notFound().build();
         }
+
+        // Set the ID from path variable to ensure we're updating the correct student
+        studentEntity.setId(id);
+
+        // Handle password properly - if password is being updated, hash it
+        if (studentEntity.getPassword() != null && !studentEntity.getPassword().isEmpty()) {
+            String hashedPassword = passwordEncoder.encode(studentEntity.getPassword());
+            studentEntity.setPassword(hashedPassword);
+        } else {
+            // Keep the existing password if not provided in update
+            studentEntity.setPassword(existingStudent.getPassword());
+        }
+
+        StudentEntity updatedStudent = studentService.updateStudent(studentEntity);
+        return ResponseEntity.ok(StudentMapper.toDto(updatedStudent));
     }
 
     @DeleteMapping("/{id}")
