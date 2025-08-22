@@ -1,5 +1,9 @@
 FROM eclipse-temurin:24-jdk
 LABEL authors="Devian"
+
+WORKDIR /app
+
 ARG JAR_FILE=target/*.jar
+
 COPY target/StudentPortal-0.0.1-SNAPSHOT.jar app.jar
 ENTRYPOINT ["java", "-jar", "/app.jar"]
