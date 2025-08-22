@@ -5,6 +5,7 @@ import com.devian.studentportal.repo.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -21,8 +22,10 @@ public class StudentService {
 
     public StudentEntity getStudentById(Long id){return studentRepository.findById(id).orElse(null);}
 
-    public StudentEntity saveStudent(StudentEntity studentEntity){return studentRepository.save(studentEntity);}
-
+    public StudentEntity updateStudent(@RequestBody StudentEntity studentEntity){
+        studentRepository.save(studentEntity);
+        return studentEntity;
+    }
     public void deleteStudentById(Long id){studentRepository.deleteById(id);}
 
     public StudentEntity registerStudent(StudentEntity studentEntity){
@@ -30,10 +33,4 @@ public class StudentService {
         return studentRepository.save(studentEntity);
     }
 
-//    public boolean login(String email, String rawPassword) {
-//        StudentEntity student = StudentRepository.findByEmail(email)
-//                .orElseThrow(() -> new RuntimeException("User not found"));
-//
-//        return bCryptPasswordEncoder.matches(rawPassword, student.getPassword());
-//    }
 }
