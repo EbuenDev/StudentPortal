@@ -1,31 +1,43 @@
-version: '3.9'
-
 services:
   db:
-    image: postgres:15
-    container_name: school_db
+    image: postgres:16
+    container_name: studentportal-db
     environment:
+      POSTGRES_DB: schooldb
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin
-      POSTGRES_DB: studentportal
+      TZ: Asia/Manila
     ports:
-      - "5432:5432"
+      - "5432:5432"   # expose if you want to connect from host tools
     volumes:
-      - pgdata:/var/lib/postgresql/data
-    restart: unless-stopped
+      - dbdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
   app:
-    build: .
-    container_name: studentportal_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: studentportal-app
+    depends_on:
+      db:
+        condition: service_healthy
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/studentportal
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/schooldb
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: admin
-    depends_on:
-      - db
+      TZ: Asia/Manila
     ports:
       - "8080:8080"
-    restart: unless-stopped
+    # If you need more memory headroom, uncomment:
+    # deploy:
+    #   resources:
+    #     limits:
+    #       memory: 1024M
 
 volumes:
-  pgdata:
+  dbdata:
