@@ -81,8 +81,6 @@ public class StudentRegisterDto {
     @Pattern(regexp = "^[0-9]{4}$", message = "Zip code must be 4 digits")
     private String zipCode;
 
-    // Student status
-    private Boolean graduating;
 
     @NotBlank(message = "Student ID number is required")
     @Size(max = 20, message = "Student ID number must not exceed 20 characters")

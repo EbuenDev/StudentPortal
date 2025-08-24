@@ -53,7 +53,6 @@ public class StudentMapper {
                 .city(dto.getCity())
                 .province(dto.getProvince())
                 .zipCode(dto.getZipCode())
-                .graduating(dto.getGraduating())
                 .studentIDNumber(dto.getStudentIDNumber())
                 .course(dto.getCourse())
                 .status(StudentEntity.Status.ACTIVE) // Set default status for new registrations
