@@ -1,0 +1,14 @@
+.main-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem;
+
+  .announcement-section {
+    flex: 2;
+    margin-right: 2rem;
+  }
+
+  .login-section {
+    flex: 1;
+  }
+}
