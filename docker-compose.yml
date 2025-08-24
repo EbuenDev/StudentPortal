@@ -33,11 +33,5 @@ services:
       TZ: Asia/Manila
     ports:
       - "8080:8080"
-    # If you need more memory headroom, uncomment:
-    # deploy:
-    #   resources:
-    #     limits:
-    #       memory: 1024M
-
 volumes:
   dbdata:
