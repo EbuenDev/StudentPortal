@@ -4,15 +4,13 @@ package com.devian.studentportal.controller;
 import com.devian.studentportal.dto.InstructorDto;
 import com.devian.studentportal.dto.InstructorRegisterDto;
 import com.devian.studentportal.model.InstructorEntity;
+import com.devian.studentportal.model.StudentEntity;
 import com.devian.studentportal.service.InstructorService;
 import com.devian.studentportal.utility.InstructorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,5 +45,12 @@ public class InstructorController {
     }
 
 
+    @PostMapping
+    public ResponseEntity<InstructorDto> createInstructor(@RequestBody InstructorRegisterDto registerDto) {
+        InstructorEntity instructorEntity = InstructorMapper.fromRegisterDto(registerDto);
+//        instructorEntity.setPassword(bCryptPasswordEncoder.encode(instructorEntity.getPassword()));
+        InstructorEntity savedInstructor = instructorService.registerInstructor(instructorEntity);
+        return ResponseEntity.ok(InstructorMapper.toDto(savedInstructor));
+    }
 
 }

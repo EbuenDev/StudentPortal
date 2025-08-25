@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import net.minidev.json.annotate.JsonIgnore;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -15,11 +14,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Table(name = "pre_registrations")
 public class PreRegistrationEntity {
-
-    public enum Gender {
-        MALE,
-        FEMALE
-    }
 
     public enum VerificationStatus {
         PENDING,   // Email not yet verified
@@ -32,25 +26,14 @@ public class PreRegistrationEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Personal Information
-    private String firstName;
-    private String middleName;
-    private String lastName;
-    private LocalDate dateOfBirth;
-
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
-
-    private String civilStatus;
-
-    // Contact Information
-    private String mobileNumber;
-    private String email;
-
-
     // Security Information
+    private String email;
     @JsonIgnore
     private String password;
+
+    // Academic Information
+    private String course;
+
 
     // Pre-registration tracking
     @Enumerated(EnumType.STRING)
@@ -60,6 +43,4 @@ public class PreRegistrationEntity {
 
     private LocalDateTime tokenGeneratedAt; // optional: for expiry tracking
 
-    // Academic Information
-    private String course;
 }
